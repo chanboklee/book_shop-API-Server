@@ -32,8 +32,8 @@ public class MemberService {
 	}
 	
 	private boolean validateDuplicateMember(Member member) {
-		return memberRepository.existsUserIdAndUserPw(member.getUserId(),
-											   		  member.getUserPw());
+		return memberRepository.existsByUserIdAndUserPw(member.getUserId(),
+											   		    member.getUserPw());
 	}
 
 	// 전체 회원 조회

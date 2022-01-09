@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.book.shop.domain.Address;
 import com.book.shop.domain.Member;
 import com.book.shop.dto.MemberDto;
 import com.book.shop.request.CreateMemberRequest;
 import com.book.shop.response.AllMemberResponse;
 import com.book.shop.response.CreateMemberResponse;
+import com.book.shop.response.OneMemberResponse;
 import com.book.shop.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
@@ -30,8 +32,9 @@ public class MemberApiController {
 	private final MemberService memberService;
 	
 	@GetMapping("/members/{id}")
-	public void getMember(@PathVariable(name = "id") Long memberId) {
-		
+	public ResponseEntity<OneMemberResponse> getMember(@PathVariable(name = "id") Long memberId) {
+		Member findMember = memberService.getMember(memberId);
+		return ResponseEntity.ok().body(new OneMemberResponse(findMember.getName()));
 	}
 	
 	@GetMapping("/members")
@@ -44,11 +47,17 @@ public class MemberApiController {
 	}
 	
 	
-	@PostMapping("/smembers")
+	@PostMapping("/members")
 	public ResponseEntity<CreateMemberResponse> saveMember(@RequestBody CreateMemberRequest createMemberRequest) {
+		
+		Address address = new Address(createMemberRequest.getCity(),
+									  createMemberRequest.getZipcode(),
+									  createMemberRequest.getStreet());
+		
 		Member member = new Member(createMemberRequest.getName(),
 								   createMemberRequest.getUserId(),
-								   createMemberRequest.getUserPw());
+								   createMemberRequest.getUserPw(),
+								   address);
 		
 		memberService.saveMember(member);
 		URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/members").toUriString());
