@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member {
+public class Member extends BaseEntity{
 
 	@Id
 	@GeneratedValue
@@ -21,4 +21,11 @@ public class Member {
 	private String name;			// 이름
 	private String userId;			// 유저 아이디
 	private String userPw;			// 유저 비밀번호 
+	
+	
+	public Member(String name, String userId, String userPw) {
+		this.name = name;
+		this.userId = userId;
+		this.userPw = userPw;
+	}
 }
