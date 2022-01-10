@@ -12,6 +12,10 @@ tmp/
 *~.nib
 # local.properties
 src/main/resources/application.yml
+
+# querydsl q-type
+build/generated/querydsl
+
 .settings/
 .loadpath
 .recommenders
