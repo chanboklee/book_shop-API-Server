@@ -1,12 +1,14 @@
 package com.book.shop.domain;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -15,22 +17,24 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class OrderItem {
+public class Delivery {
 	
 	@Id
 	@GeneratedValue
-	@Column(name = "order_item_id")
+	@Column(name = "delivery_id")
 	private Long id;
+
+	@Embedded
+	private Address address;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "order_id")
+	@OneToOne(mappedBy = "delivery", fetch = FetchType.LAZY)
 	private Order order;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "item_id")
-	private Item item;
-	
+	@Enumerated(EnumType.STRING)
+	private DeliveryStatus status;
+
 	public void setOrder(Order order) {
 		this.order = order;
 	}
+	
 }

@@ -3,6 +3,7 @@ package com.book.shop.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AccessLevel;
@@ -39,6 +41,23 @@ public class Order {
 	
 	@OneToMany(mappedBy = "order")
 	List<OrderItem> orderItems = new ArrayList<>();	// order - item 중간테이블
+	
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "delivery_id")
+	private Delivery delivery;
+	
+	
+	// 연관관계 메서드
+	public void changeDelivery(Delivery delivery) {
+		this.delivery = delivery;
+		delivery.setOrder(this);
+	}
+	
+	// 연관관계 메서드
+	public void changeOrderItem(OrderItem orderItem) {
+		orderItems.add(orderItem);
+		orderItem.setOrder(this);
+	}
 	
 	// 연관관계 메서드
 	public void changeMember(Member member) {
