@@ -47,15 +47,19 @@ public class Order {
 	@JoinColumn(name = "delivery_id")
 	private Delivery delivery;
 	
-//	public static Order createOrder(Member member, Delivery delivery, OrderStatus status) {
-//		Order order = new Order(delivery, member, status);
-//		
-//		return order;
-//	}
+	public static Order createOrder(Member member, Delivery delivery, OrderStatus status) {
+		Order order = Order.builder().delivery(delivery)
+									 .member(member)
+									 .orderStatus(status)
+									 .build();
+		return order;
+	}
 	
-	public Order(Delivery delivery, Member member) {
+	@Builder
+	private Order(Delivery delivery, Member member, OrderStatus orderStatus) {
 		this.delivery = delivery;
 		this.member = member;
+		this.orderStatus = orderStatus;
 	}
 	
 	// 연관관계 메서드

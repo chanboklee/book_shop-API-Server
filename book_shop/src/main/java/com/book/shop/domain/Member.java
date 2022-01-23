@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -33,6 +34,7 @@ public class Member extends BaseEntity{
 	@OneToMany(mappedBy = "member")
 	private List<Order> orders = new ArrayList<>();		// ¡÷πÆ
 	
+	@Builder
 	public Member(String name, String userId, String userPw, Address address) {
 		this.name = name;
 		this.userId = userId;

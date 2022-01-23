@@ -38,6 +38,7 @@ public class Delivery {
 		this.order = order;
 	}
 	
+	@Builder
 	public Delivery(Address address, DeliveryStatus status) {
 		this.address = address;
 		this.status = status; 

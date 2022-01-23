@@ -50,14 +50,16 @@ public class MemberApiController {
 	@PostMapping("/members")
 	public ResponseEntity<CreateMemberResponse> saveMember(@RequestBody CreateMemberRequest createMemberRequest) {
 		
-		Address address = new Address(createMemberRequest.getCity(),
-									  createMemberRequest.getZipcode(),
-									  createMemberRequest.getStreet());
+		Address address = Address.builder().city(createMemberRequest.getCity())
+										   .zipcode(createMemberRequest.getZipcode())
+										   .street(createMemberRequest.getStreet())
+										   .build();
 		
-		Member member = new Member(createMemberRequest.getName(),
-								   createMemberRequest.getUserId(),
-								   createMemberRequest.getUserPw(),
-								   address);
+		Member member = Member.builder().name(createMemberRequest.getName())
+										.userId(createMemberRequest.getUserId())
+										.userPw(createMemberRequest.getUserPw())
+										.address(address)
+										.build();
 		
 		memberService.saveMember(member);
 		URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/members").toUriString());
