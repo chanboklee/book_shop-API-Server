@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -37,4 +38,8 @@ public class Delivery {
 		this.order = order;
 	}
 	
+	public Delivery(Address address, DeliveryStatus status) {
+		this.address = address;
+		this.status = status; 
+	}
 }

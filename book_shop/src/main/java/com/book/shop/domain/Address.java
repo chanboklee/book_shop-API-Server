@@ -15,9 +15,9 @@ public class Address {
 	private String zipcode;
 	private String city;
 	
-	public Address(String street, String city, String zipcode) {
-		this.street = street;
+	public Address(String city, String zipcode, String street) {
 		this.city = city;
 		this.zipcode = zipcode;
+		this.street = street;
 	}
 }

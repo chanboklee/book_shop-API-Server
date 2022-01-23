@@ -11,5 +11,5 @@ public class CreateMemberRequest {
 	
 	private String city;
 	private String zipcode;
-	private String street;
+	private String street; 
 }

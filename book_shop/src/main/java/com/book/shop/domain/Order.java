@@ -18,6 +18,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -33,7 +34,7 @@ public class Order {
 	private Long id;								// PK
 	
 	@Enumerated(EnumType.STRING)
-	private OrderStatus status;						// 주문 enum
+	private OrderStatus orderStatus;						// 주문 enum
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id")
@@ -46,6 +47,16 @@ public class Order {
 	@JoinColumn(name = "delivery_id")
 	private Delivery delivery;
 	
+//	public static Order createOrder(Member member, Delivery delivery, OrderStatus status) {
+//		Order order = new Order(delivery, member, status);
+//		
+//		return order;
+//	}
+	
+	public Order(Delivery delivery, Member member) {
+		this.delivery = delivery;
+		this.member = member;
+	}
 	
 	// 연관관계 메서드
 	public void changeDelivery(Delivery delivery) {
