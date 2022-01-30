@@ -1,5 +1,7 @@
 package com.book.shop.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,5 +25,13 @@ public class OrderService implements OrderServiceImpl {
 		orderRepository.save(order);
 		
 		return order.getId();
+	}
+	
+	public List<Order> getOrders(Long memberId) {
+		return orderRepository.getOrders(memberId);
+	}
+	
+	public Order getOrder(Long memberId, Long orderId) {
+		return orderRepository.getOrder(memberId, orderId);
 	}
 }

@@ -2,10 +2,11 @@ package com.book.shop.repository;
 
 import java.util.List;
 
-import com.book.shop.dto.OrderDto;
+import com.book.shop.domain.Order;
 
 public interface OrderRepositoryCustom {
 
-	List<OrderDto> getOrders();
+	List<Order> getOrders(Long memberId);
+	Order getOrder(Long memberId, Long orderId);
 	
 }

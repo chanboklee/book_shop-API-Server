@@ -1,6 +1,8 @@
 package com.book.shop.controller;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,10 +18,13 @@ import com.book.shop.domain.DeliveryStatus;
 import com.book.shop.domain.Member;
 import com.book.shop.domain.Order;
 import com.book.shop.domain.OrderStatus;
+import com.book.shop.dto.OrderSimpleQueryDto;
 import com.book.shop.response.CreateOrderResponse;
 import com.book.shop.service.MemberService;
 import com.book.shop.service.OrderService;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -45,13 +50,34 @@ public class OrderApiController {
 	}
 	
 	@GetMapping("/members/{memberId}/orders{orderId}")
-	public void getOrder(@PathVariable(name = "memberId") Long memberId, @PathVariable(name = "orderId") Long orderId) {
-		
-		
+	public ResponseEntity<OrderDto> getOrder(@PathVariable(name = "memberId") Long memberId,
+											 @PathVariable(name = "orderId") Long orderId) {
+		Order order = orderService.getOrder(memberId, orderId);
+		return ResponseEntity.ok().body(new OrderDto(order, order.getMember().getName(), order.getDelivery().getAddress()));
+	}
+	
+	@Data
+	@AllArgsConstructor
+	static class OrderDto {
+		private Order order;
+		private String name;
+		private Address address;
 	}
 	
 	@GetMapping("/members/{memberId}/orders")
-	public void getOrders(@PathVariable(name = "memberId") Long memberId) {
-		
+	public ResponseEntity<Result> getOrders(@PathVariable(name = "memberId") Long memberId) {
+		List<OrderSimpleQueryDto> orders = orderService.getOrders(memberId).stream()
+																   		   .map(o -> new OrderSimpleQueryDto(o.getId(),
+																		   							 		 o.getMember().getName(),
+																		   							 		 o.getOrderStatus(),
+																		   							 		 o.getDelivery().getAddress()))
+																   		   .collect(Collectors.toList());
+		return ResponseEntity.ok().body(new Result(orders));
+	}
+	
+	@Data
+	@AllArgsConstructor
+	static class Result<T> {
+		private T orderData;
 	}
 }
