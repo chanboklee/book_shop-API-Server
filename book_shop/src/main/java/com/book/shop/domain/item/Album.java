@@ -1,4 +1,4 @@
-package com.book.shop.domain;
+package com.book.shop.domain.item;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -9,11 +9,11 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@DiscriminatorValue("B")
+@DiscriminatorValue("A")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Book extends Item{
+public class Album extends Item{
 	
-	private String author;			// 저자
-	private String isbn;			// isbn
+	private String artist;	// 아티스트
+	private String etc;		// 비고
 
 }

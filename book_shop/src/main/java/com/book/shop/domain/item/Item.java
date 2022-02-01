@@ -1,4 +1,4 @@
-package com.book.shop.domain;
+package com.book.shop.domain.item;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
+
+import com.book.shop.domain.OrderItem;
+import com.book.shop.exception.ApiException;
+import com.book.shop.exception.ExceptionEnum;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -34,5 +38,16 @@ public abstract class Item {
 	
 	@OneToMany(mappedBy = "item")
 	List<OrderItem> orderItems = new ArrayList<>();		//order-item 중간테이블
-
+	
+	public void addStock(int quantity) {
+		this.stockQuantity += quantity;
+	}
+	
+	public void removeStock(int quantity) {
+		int curStock = this.stockQuantity - quantity;
+		if(curStock < 0) {
+			throw new ApiException(ExceptionEnum.NOT_ENOUGH_STOCK);
+		}
+		this.stockQuantity = curStock;
+	}
 }

@@ -13,6 +13,7 @@ public enum ExceptionEnum {
 	ACCESS_DENIED_EXCEPTION(HttpStatus.BAD_REQUEST, "E0002"),
 	INTERNAL_SERVER_ERROR(HttpStatus.BAD_REQUEST, "E0003"),
 	MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "M0001", "회원이 이미 존재합니다."),
+	NOT_ENOUGH_STOCK(HttpStatus.NOT_FOUND, "S0001", "재고가 없습니다."),
 	SECURITY_01(HttpStatus.UNAUTHORIZED, "S0001", "권한이 없습니다.");	
 
 	private final HttpStatus status;
