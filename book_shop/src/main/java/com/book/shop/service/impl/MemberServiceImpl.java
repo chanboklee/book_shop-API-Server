@@ -9,4 +9,5 @@ public interface MemberServiceImpl {
 	public Long saveMember(Member member);
 	List<Member> getMembers();
 	Member getMember(Long memberId);
+	Member findByName(String name);
 }

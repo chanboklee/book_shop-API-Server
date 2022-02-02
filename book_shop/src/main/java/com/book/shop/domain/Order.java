@@ -34,31 +34,35 @@ public class Order {
 	private Long id;								// PK
 	
 	@Enumerated(EnumType.STRING)
-	private OrderStatus orderStatus;						// 주문 enum
+	private OrderStatus orderStatus;				// 주문 enum
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id")
 	private Member member;							// 회원
 	
-	@OneToMany(mappedBy = "order")
+	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
 	List<OrderItem> orderItems = new ArrayList<>();	// order - item 중간테이블
 	
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "delivery_id")
 	private Delivery delivery;
 	
-	public static Order createOrder(Member member, Delivery delivery, OrderStatus status) {
+	public static Order createOrder(Member member, Delivery delivery, OrderStatus status, OrderItem... orderItem) {
 		Order order = Order.builder().delivery(delivery)
 									 .member(member)
 									 .orderStatus(status)
+									 .orderItems(orderItem)
 									 .build();
 		return order;
 	}
 	
 	@Builder
-	private Order(Delivery delivery, Member member, OrderStatus orderStatus) {
-		this.delivery = delivery;
-		this.member = member;
+	private Order(Delivery delivery, Member member, OrderStatus orderStatus, OrderItem... orderItems) {
+		this.changeDelivery(delivery);
+		this.changeMember(member);
+		for(OrderItem orderItem : orderItems) {
+			this.changeOrderItem(orderItem);
+		}
 		this.orderStatus = orderStatus;
 	}
 	

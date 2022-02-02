@@ -52,4 +52,10 @@ public class MemberService implements MemberServiceImpl{
 		// TODO Auto-generated method stub
 		return memberRepository.findById(memberId).orElse(null);
 	}
+	
+	@Override
+	public Member findByName(String name) {
+		// TODO Auto-generated method stub
+		return memberRepository.findByName(name);
+	}
 }

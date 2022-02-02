@@ -11,6 +11,7 @@ tmp/
 *.swp
 *~.nib
 # local.properties
+src/test/resources/application.yml
 src/main/resources/application.yml
 
 # querydsl q-type
