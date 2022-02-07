@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,7 +50,7 @@ public class MemberApiController {
 	
 	
 	@PostMapping("/members")
-	public ResponseEntity<CreateMemberResponse> saveMember(@RequestBody CreateMemberRequest createMemberRequest) {
+	public ResponseEntity<CreateMemberResponse> saveMember(@RequestBody @Valid CreateMemberRequest createMemberRequest) {
 		
 		Address address = Address.builder().city(createMemberRequest.getCity())
 										   .zipcode(createMemberRequest.getZipcode())

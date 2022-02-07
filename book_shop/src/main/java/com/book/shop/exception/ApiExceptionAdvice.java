@@ -3,6 +3,7 @@ package com.book.shop.exception;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -32,5 +33,13 @@ public class ApiExceptionAdvice {
 		return ResponseEntity.status(ExceptionEnum.INTERNAL_SERVER_ERROR.getStatus())
 							 .body(new ApiExceptionEntity(ExceptionEnum.INTERNAL_SERVER_ERROR.getCode()
 									 					 ,e.getMessage()));
+	}
+	
+	@ExceptionHandler({ MethodArgumentNotValidException.class })
+	public ResponseEntity<ApiExceptionEntity> methodValidException(HttpServletRequest request, final MethodArgumentNotValidException e){
+		
+		return ResponseEntity.status(ExceptionEnum.NOT_BLANK.getStatus())
+							 .body(new ApiExceptionEntity(ExceptionEnum.NOT_BLANK.getCode()
+									 					 ,e.getBindingResult().getFieldError().getDefaultMessage()));
 	}
 }
